@@ -1,4 +1,6 @@
 package archive.compression;
 
-public class Compression {
+public interface Compression {
+    byte[] compress(byte[] data);
+    byte[] decompress(byte[] data);
 }
