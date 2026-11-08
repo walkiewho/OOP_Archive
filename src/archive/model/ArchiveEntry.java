@@ -8,20 +8,12 @@ public class ArchiveEntry {
     private final Path filePath;
     private final long size;
     private final long checksum;
-    private final EntryType type;
 
 
     public ArchiveEntry(String filePath) throws IOException {
         this.filePath = getPath(filePath);
-        this.type = getEntryType();
-
-        if (this.type == EntryType.FILE) {
-            this.size = getFileSize();
-            this.checksum = calcChecksum();
-        } else {
-            this.size = 0;
-            this.checksum = 0;
-        }
+        this.size = getFileSize();
+        this.checksum = calcChecksum();
 
     }
 
@@ -35,13 +27,6 @@ public class ArchiveEntry {
         }
     }
 
-
-    private EntryType getEntryType() {
-        if (Files.isRegularFile(this.filePath)) {
-            return EntryType.FILE;
-        }
-        return EntryType.DIRECTORY;
-    }
 
     private long getFileSize() throws IOException {
         return Files.size(this.filePath);
@@ -62,5 +47,4 @@ public class ArchiveEntry {
     public Path getFilePath() { return filePath; }
     public long getSize() { return size; }
     public long getChecksum() { return checksum; }
-    public EntryType getType() { return type; }
 }
