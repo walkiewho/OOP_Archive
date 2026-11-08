@@ -14,8 +14,15 @@ public class ArchiveEntry {
     public ArchiveEntry(String filePath) throws IOException {
         this.filePath = getPath(filePath);
         this.type = getEntryType();
-        this.size = getFileSize();
-        this.checksum = calcChecksum();
+
+        if (this.type == EntryType.FILE) {
+            this.size = getFileSize();
+            this.checksum = calcChecksum();
+        } else {
+            this.size = 0;
+            this.checksum = 0;
+        }
+
     }
 
     private Path getPath(String filePathString) throws FileNotFoundException {
@@ -51,4 +58,9 @@ public class ArchiveEntry {
         }
         return xor;
     }
+
+    public Path getFilePath() { return filePath; }
+    public long getSize() { return size; }
+    public long getChecksum() { return checksum; }
+    public EntryType getType() { return type; }
 }
